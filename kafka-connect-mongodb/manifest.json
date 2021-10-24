@@ -1,6 +1,6 @@
 {
   "name" : "kafka-connect-mongodb",
-  "version" : "0.2",
+  "version" : "1.7.0-SNAPSHOT",
   "title" : "MongoDB Connector for Apache Kafka",
   "description" : "The official MongoDB Kafka connector, providing both Sink and Source connectors.",
   "owner" : {
@@ -32,5 +32,5 @@
   }],
   "component_types" : [ "sink", "source" ],
   "requirements": ["MongoDB server for Sink and a MongoDB replicaSet or Sharded replicaSet for Source"],
-  "release_date": "2019-07-25"
+  "release_date": "2021-10-23"
 }
