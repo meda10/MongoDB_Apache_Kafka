@@ -24,3 +24,14 @@ FIT - PDB project
 
 #Inspirace 
 * https://www.novinky.cz/p/vysledky-voleb/2021/parlamentni-volby#utm_content=utility&utm_term=V%C3%BDsledky%20voleb&utm_medium=hint&utm_source=search.seznam.cz
+
+#Spuštění
+```
+./run.sh
+```
+
+V prohlížeči otevřít
+```
+localhost:9021
+localhost:8000
+```
