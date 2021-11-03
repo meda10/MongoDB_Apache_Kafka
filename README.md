@@ -36,4 +36,11 @@ V prohlížeči otevřít
 ```
 localhost:9021
 localhost:8000
+
+docker-compose exec broker bash
+kafka-console-consumer --bootstrap-server localhost:9092 --topic Hlasy --from-beginning
+
+
+show dbs
+
 ```
