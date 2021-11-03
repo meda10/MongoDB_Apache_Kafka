@@ -54,41 +54,38 @@
             </div>
 
             <div class="d-flex justify-content-center">
-            <div class="row mx-auto">
-                <div class="col-xs-12 info-col">
-                    <div class="row mx-auto text-center">
-                        <div class="col-xs-12 mx-auto">
-                            <span class="vlb-nadpis">sečteno</span>
+                <div class="row mx-auto">
+                    <div class="col-xs-12 info-col">
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span class="vlb-nadpis">sečteno</span>
+                            </div>
+                        </div>
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span id="info-summed-percent" class="vlb-val">100%</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mx-auto text-center">
-                        <div class="col-xs-12 mx-auto">
-                            <span id="info-summed-percent" class="vlb-val">100%</span>
+                    <div class="col-xs-12 info-col">
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span class="vlb-nadpis">účast</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 info-col">
-                    <div class="row mx-auto text-center">
-                        <div class="col-xs-12 mx-auto">
-                            <span class="vlb-nadpis">účast</span>
-                        </div>
-                    </div>
-                    <div class="row mx-auto text-center">
-                        <div class="col-xs-12 mx-auto">
-                            <span id="info-participation-percent" class="vlb-val">69%</span>
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span id="info-participation-percent" class="vlb-val">69%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
             <div>
                 Tady bude graf
             </div>
 
-
-        <div id="bodyMain" class="body">
-            <h2>Česká republika</h2>
             <div id="mapacr" class="mx-auto d-block">
         <svg xmlns="http://www.w3.org/2000/svg" width="293px" height="167px" viewBox="0 0 293 167" version="1.1" class="vlb-map">
             <g class="vlb-map-stroke">
@@ -215,10 +212,6 @@
     </div>
 
     <script>
-
-        //const url = new URL(window.location.href);
-        //console.log(url.search.split("="));
-
         const urlParams = new URLSearchParams(window.location.search);
         const regionCode = urlParams.get('kraj');
 
