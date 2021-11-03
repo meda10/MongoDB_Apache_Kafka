@@ -30,3 +30,19 @@ svg path {
     margin-left: 150px;
     margin-right: 150px;
 }
+
+.vlb-val {
+    color: red;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+.vlb-nadpis {
+    color: #555555;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.info-col {
+    margin: 0 20px 0 20px;
+}
