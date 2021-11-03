@@ -210,6 +210,14 @@ services:
       - schema-registry
       - rest-proxy
 
+  npm:
+    image: node:16
+    container_name: npm
+    volumes:
+      - ./www:/var/www/html
+    working_dir: /var/www/html
+    entrypoint: [ 'npm' ]
+
   # MongoDB Replica Set
   mongo1:
     image: mongo:4.0-xenial

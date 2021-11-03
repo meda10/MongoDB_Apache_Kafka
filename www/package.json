@@ -1,0 +1,18 @@
+{
+  "name": " ",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": "",
+  "license": "",
+  "author": "",
+  "scripts": {
+    "dev": "npm run development",
+    "watch": "mix watch",
+    "prod": "npm run production",
+    "start": "npm run build && npm run dev",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "axios": "^0.21"
+  }
+}

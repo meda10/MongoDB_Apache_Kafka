@@ -13,6 +13,8 @@ FIT - PDB project
 ## Rest API
 * https://docs.confluent.io/platform/current/kafka-rest/index.html#kafkarest-intro
 * https://hub.docker.com/r/confluentinc/cp-kafka-rest
+* https://github.com/nodefluent/kafka-rest-ui
+* https://github.com/confluentinc/kafka-rest
 
 ## Kafka streams 
 * https://kafka.apache.org/documentation/streams/
