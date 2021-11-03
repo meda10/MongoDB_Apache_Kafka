@@ -71,3 +71,7 @@ svg path {
     top: 50%;
     right: 50%;
 }
+
+#countdown {
+    margin-top: 100px;
+}
