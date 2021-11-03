@@ -12,7 +12,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "axios": "^0.21"
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "kafka-rest": "^0.0.5"
   }
 }
