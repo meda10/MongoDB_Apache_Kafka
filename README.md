@@ -15,6 +15,7 @@ FIT - PDB project
 * https://hub.docker.com/r/confluentinc/cp-kafka-rest
 * https://github.com/nodefluent/kafka-rest-ui
 * https://github.com/confluentinc/kafka-rest
+* https://github.com/confluentinc/kafka-rest-node
 
 ## Kafka streams 
 * https://kafka.apache.org/documentation/streams/

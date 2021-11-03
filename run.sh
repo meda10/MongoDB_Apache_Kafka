@@ -92,15 +92,9 @@ rs.conf();'''
 #      "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
 #      "kafka.topic": "pageviews",
 #      "quickstart": "pageviews",
-#      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
-#      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-#      "value.converter.schemas.enable": "false",
-#      "producer.interceptor.classes": "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor",
 #      "max.interval": 200,
 #      "iterations": 10000000,
 #      "tasks.max": "1"
-#}}' http://localhost:8083/connectors -w "\n"
-
 #sleep 5
 
 #echo -e "\nAdding MongoDB Kafka Sink Connector for the 'pageviews' topic into the 'test.pageviews' collection:"
@@ -153,3 +147,64 @@ rs.conf();'''
 #Use <ctrl>-c to quit'''
 
 read -r -d '' _ </dev/tty
+
+
+
+#docker-compose exec rest-proxy curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
+#          --data '{"records":[{"value":{"strawwwna": "test2"}}]}' \
+#          "http://localhost:8082/topics/hlasy"
+#
+#docker-compose exec rest-proxy curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
+#          --data '{"records":[{"value":{"strana": "test"}}]}' \
+#          "http://localhost:8082/topics/Hlasy"
+#
+#curl "http://localhost:8082/topics/Hlasy"
+#
+#    {
+#      "name": "id_okrsku",
+#      "type": "long"
+#    }
+
+#  Mongo connector
+#{
+#  "name": "mongo-sink",
+#  "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+#  "tasks.max": "1",
+#  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+#  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#  "topics": ["Hlasy"],
+#  "connection.uri": "mongodb://mongo1:27017,mongo2:27017,mongo3:27017",
+#  "database": "volby",
+#  "collection": "hlasy"
+#}
+
+#curl -X POST -H "Content-Type: application/json" --data '
+#  {"name": "mongo-sink_v2",
+#   "config": {
+#     "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
+#     "tasks.max":"1",
+#     "topics":"Hlasy",
+#     "connection.uri":"mongodb://mongo1:27017,mongo2:27017,mongo3:27017",
+#     "database":"volby",
+#     "collection":"hlasy",
+#     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+#     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#     "value.converter.schemas.enable": "false"
+#}}' http://localhost:8083/connectors -w "\n"
+
+#curl -X POST -H "Content-Type: application/json" --data '
+#  { "name": "datagen-hlasy",
+#    "config": {
+#      "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+#      "kafka.topic": "hlasy",
+#      "log.retention.ms": "-1",
+#      "log.retention.bytes": "-1",
+#      "cleanup.policy": "delete",
+#      "replication.factor": "3",
+#      "min.insync.replicas": "1",
+#      "partitions": "1",
+#      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+#      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#      "value.converter.schemas.enable": "false",
+#      "producer.interceptor.classes": "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+#}}' http://localhost:8083/connectors -w "\n"
