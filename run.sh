@@ -1,40 +1,9 @@
 #!/bin/bash
 
-#set -e
-#(
-#if lsof -Pi :27017 -sTCP:LISTEN -t >/dev/null ; then
-#    echo "Please terminate the local mongod on 27017"
-#    exit 1
-#fi
-#)
-
-#echo "Building the MongoDB Kafka Connector"
-#(
-#cd ..
-#./gradlew clean createConfluentArchive
-#echo -e "Unzipping the confluent archive plugin....\n"
-#unzip -d ./build/confluent ./build/confluent/*.zip
-#find ./build/confluent -maxdepth 1 -type d ! -wholename "./build/confluent" -exec mv {} ./build/confluent/kafka-connect-mongodb \;
-#)
-
-#echo "Starting docker ."
-#docker-compose up -d --build
 docker-compose up -d
 
 function clean_up {
-    echo -e "\n\nSHUTTING DOWN\n\n"
-    curl --output /dev/null -X DELETE http://localhost:8083/connectors/datagen-pageviews || true
-    curl --output /dev/null -X DELETE http://localhost:8083/connectors/mongo-sink || true
-    curl --output /dev/null -X DELETE http://localhost:8083/connectors/mongo-source || true
-    docker-compose exec mongo1 /usr/bin/mongo --eval "db.dropDatabase()"
-    docker-compose rm -f -v
     docker-compose down
-    if [ -z "$1" ]
-    then
-      echo -e "Bye!\n"
-    else
-      echo -e $1
-    fi
 }
 
 sleep 5
@@ -62,22 +31,23 @@ function test_systems_available {
 test_systems_available 8082
 test_systems_available 8083
 
-trap clean_up EXIT
+echo -e "\nReady"
 
-echo -e "\nConfiguring the MongoDB ReplicaSet.\n"
-docker-compose exec mongo1 /usr/bin/mongo --eval '''if (rs.status()["ok"] == 0) {
-    rsconf = {
-      _id : "rs0",
-      members: [
-        { _id : 0, host : "mongo1:27017", priority: 1.0 },
-        { _id : 1, host : "mongo2:27017", priority: 0.5 },
-        { _id : 2, host : "mongo3:27017", priority: 0.5 }
-      ]
-    };
-    rs.initiate(rsconf);
-}
 
-rs.conf();'''
+#echo -e "\nConfiguring the MongoDB ReplicaSet.\n"
+#docker-compose exec mongo1 /usr/bin/mongo --eval '''if (rs.status()["ok"] == 0) {
+#    rsconf = {
+#      _id : "rs0",
+#      members: [
+#        { _id : 0, host : "mongo1:27017", priority: 1.0 },
+#        { _id : 1, host : "mongo2:27017", priority: 0.5 },
+#        { _id : 2, host : "mongo3:27017", priority: 0.5 }
+#      ]
+#    };
+#    rs.initiate(rsconf);
+#}
+#
+#rs.conf();'''
 
 #echo -e "\nKafka Topics:"
 #curl -X GET "http://localhost:8082/topics" -w "\n"
@@ -92,9 +62,14 @@ rs.conf();'''
 #      "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
 #      "kafka.topic": "pageviews",
 #      "quickstart": "pageviews",
+#      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+#      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#      "value.converter.schemas.enable": "false",
+#      "producer.interceptor.classes": "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor",
 #      "max.interval": 200,
 #      "iterations": 10000000,
 #      "tasks.max": "1"
+#}}' http://localhost:8083/connectors -w "\n"
 #sleep 5
 
 #echo -e "\nAdding MongoDB Kafka Sink Connector for the 'pageviews' topic into the 'test.pageviews' collection:"
@@ -146,7 +121,7 @@ rs.conf();'''
 #
 #Use <ctrl>-c to quit'''
 
-read -r -d '' _ </dev/tty
+#read -r -d '' _ </dev/tty
 
 
 

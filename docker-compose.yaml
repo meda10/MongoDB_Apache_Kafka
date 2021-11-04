@@ -9,10 +9,10 @@ services:
       - "2181:2181"
     networks:
       - localnet
-#    volumes:
-#      - data:/etc/zookeeper/secrets
-#      - data:/var/lib/zookeeper/data
-#      - data:/var/lib/zookeeper/log
+    volumes:
+      - zookeeper1:/var/lib/zookeeper/data
+      - zookeeper2:/var/lib/zookeeper/log
+      - zookeeper3:/etc/zookeeper/secrets
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -44,6 +44,7 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.3.0
@@ -262,7 +263,16 @@ networks:
 
 volumes:
   rs1:
+    driver: local
   rs2:
+    driver: local
   rs3:
+    driver: local
   data:
+    driver: local
+  zookeeper1:
+    driver: local
+  zookeeper2:
+    driver: local
+  zookeeper3:
     driver: local

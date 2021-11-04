@@ -1,6 +1,4 @@
 # PDB
-FIT - PDB project
-
 
 ## Tutorial
 * https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html
@@ -33,15 +31,20 @@ FIT - PDB project
 ./run.sh
 ```
 
-V prohlížeči otevřít
+Browser
 ```
 localhost:9021
 localhost:8000
+```
 
+All events in topic
+```
 docker-compose exec broker bash
-kafka-console-consumer --bootstrap-server localhost:9092 --topic Hlasy --from-beginning
+kafka-console-consumer --bootstrap-server localhost:9092 --topic NAME --from-beginning
+```
 
-
-show dbs
-
+Delete topic
+```
+docker-compose exec broker bash
+kafka-topics --delete --zookeeper zookeeper:2181 --topic NAME
 ```
