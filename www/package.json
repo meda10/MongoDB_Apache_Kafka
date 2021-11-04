@@ -14,6 +14,9 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
-    "kafka-rest": "^0.0.5"
+    "axios": "^0.24.0",
+    "kafka-rest": "^0.0.5",
+    "kafka-rest-client": "^1.11.7",
+    "xmlhttprequest": "^1.8.0"
   }
 }
