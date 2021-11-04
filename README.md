@@ -48,3 +48,10 @@ Delete topic
 docker-compose exec broker bash
 kafka-topics --delete --zookeeper zookeeper:2181 --topic NAME
 ```
+
+Test Message
+```
+docker-compose exec rest-proxy curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
+          --data '{"records":[{"value":{"strana": "test"}}]}' \
+          "http://localhost:8082/topics/hlasy"
+```
