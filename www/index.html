@@ -6,14 +6,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+    <div id="loadingScreen" style="display: none">
+        <div class="spinner-border text-danger" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Volby do poslanecké sněmovny</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-      </button>
-
-        <!--
+        <a class="navbar-brand" href="#">Volby do poslanecké sněmovny</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!--
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
@@ -42,40 +46,46 @@
 
     <div id="body">
         <h4>Volby do poslanecké sněmovny 2021</h4>
+        <div id="bodyMain" class="body">
+            <h2>Česká republika</h2>
+            <div id="countdown" class="alert alert-warning" role="alert">
+                Obnovení stránky za: <span id="countdownSeconds" style="font-weight: bold">0:45</span> minut
+                <a href="#" onclick="refreshPage();" style="margin-left: 20px; font-weight: bold;" class="alert-link">Obnovit</a>
+            </div>
 
-        <div class="d-flex justify-content-center">
-            <div class="row mx-auto">
-                <div class="col-xs-12">
-                    <div class="row mx-auto">
-                        <div class="col-xs-12">
-                            <span class="vlb-nadpis">sečteno</span>
+            <div class="d-flex justify-content-center">
+                <div class="row mx-auto">
+                    <div class="col-xs-12 info-col">
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span class="vlb-nadpis">sečteno</span>
+                            </div>
+                        </div>
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span id="info-summed-percent" class="vlb-val">100%</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mx-auto">
-                        <div class="col-xs-12">
-                            <span class="vlb-nadpis">účast</span>
+                    <div class="col-xs-12 info-col">
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span class="vlb-nadpis">účast</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <div class="row mx-auto">
-                        <div class="col-xs-12">
-                            <span class="vlb-val">100%</span>
-                        </div>
-                    </div>
-                    <div class="row mx-auto">
-                        <div class="col-xs-12">
-                            <span class="vlb-val">100%</span>
+                        <div class="row mx-auto text-center">
+                            <div class="col-xs-12 mx-auto">
+                                <span id="info-participation-percent" class="vlb-val">69%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div>
+                Tady bude graf
+            </div>
 
-
-        <div id="bodyMain" class="body">
-            <h2>Česká republika</h2>
             <div id="mapacr" class="mx-auto d-block">
         <svg xmlns="http://www.w3.org/2000/svg" width="293px" height="167px" viewBox="0 0 293 167" version="1.1" class="vlb-map">
             <g class="vlb-map-stroke">
@@ -168,17 +178,40 @@
     </div>
         </div>
 
-
         <div id="bodyRegion" class="body" style="display: none;">
             <h2 id="regionName">... kraj</h2>
+            <div class="d-flex justify-content-center">
+            <div class="row mx-auto">
+                <div class="col-xs-12 info-col">
+                    <div class="row mx-auto text-center">
+                        <div class="col-xs-12 mx-auto">
+                            <span class="vlb-nadpis">sečteno</span>
+                        </div>
+                    </div>
+                    <div class="row mx-auto text-center">
+                        <div class="col-xs-12 mx-auto">
+                            <span id="info-summed-percent" class="vlb-val">100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 info-col">
+                    <div class="row mx-auto text-center">
+                        <div class="col-xs-12 mx-auto">
+                            <span class="vlb-nadpis">účast</span>
+                        </div>
+                    </div>
+                    <div class="row mx-auto text-center">
+                        <div class="col-xs-12 mx-auto">
+                            <span id="info-participation-percent" class="vlb-val">69%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
     <script>
-
-        //const url = new URL(window.location.href);
-        //console.log(url.search.split("="));
-
         const urlParams = new URLSearchParams(window.location.search);
         const regionCode = urlParams.get('kraj');
 
@@ -217,6 +250,49 @@
             mainBody.style.display = 'none';
         }
 
+        function showLoading() {
+            var loading = document.getElementById('loadingScreen');
+            loading.style.display = 'block';
+        }
+
+        function hideLoading() {
+            var loading = document.getElementById('loadingScreen');
+            loading.style.display = 'none';
+        }
+
+    </script>
+
+
+    <script>
+        var secondsLeft = 45;
+        var countdownSeconds = document.getElementById('countdownSeconds');
+
+        function refreshPage() {
+            // todo get data
+            secondsLeft = 45;
+            setTime();
+        }
+
+        function countTime() {
+            if (secondsLeft === 0) {
+                // todo get data
+            } else {
+                secondsLeft--;
+                setTime();
+            }
+        }
+
+        function setTime() {
+            var text = Math.floor(secondsLeft / 60) + ":";
+
+            var seconds = (secondsLeft % 60);
+            if (seconds < 10) text += '0';
+            text += seconds;
+
+            countdownSeconds.innerHTML = text;
+        }
+
+        setInterval(countTime, 1000);
     </script>
 
 

@@ -27,6 +27,51 @@ svg path {
 
 #body {
     margin-top: 100px;
-    margin-left: 150px;
-    margin-right: 150px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.vlb-val {
+    color: red;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+.vlb-nadpis {
+    color: #555555;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#mapacr {
+    max-width: 50%;
+    min-width: 400px;
+}
+
+.info-col {
+    margin: 0 20px 0 20px;
+}
+
+#loadingScreen {
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.3);
+    z-index: 3000;
+}
+
+#loadingScreen .spinner-border {
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+}
+
+#countdown {
+    margin-top: 100px;
 }
