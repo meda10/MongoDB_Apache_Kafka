@@ -183,3 +183,16 @@ echo -e "\nReady"
 #      "value.converter.schemas.enable": "false",
 #      "producer.interceptor.classes": "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
 #}}' http://localhost:8083/connectors -w "\n"
+
+#{
+#  "name": "value_hlasy",
+#  "type": "record",
+#  "namespace": "",
+#  "fields": [
+#    {"name":  "strana", "type": "string"},
+#    {"name":  "preferencni_1", "type": "long"},
+#    {"name":  "preferencni_2", "type": "long"},
+#    {"name":  "preferencni_3", "type": "long"},
+#    {"name":  "preferencni_4", "type": "long"}
+#  ]
+#}
