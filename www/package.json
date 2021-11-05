@@ -5,15 +5,17 @@
   "license": "",
   "author": "",
   "scripts": {
-    "build": "parcel build index.html",
+    "build": "parcel build -d docs --public-url \"https://romanbartl.github.io/pdb-xbartl06-team/\" index.html",
     "dev": "parcel index.html --open",
     "start": "npm run build && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify ./js/main.js -o ./js/bundle.js"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
+    "autocompleter": "^6.1.2",
     "axios": "^0.24.0",
     "xmlhttprequest": "^1.8.0"
   }
