@@ -29,12 +29,19 @@
 #Spuštění
 ```
 ./run.sh
+./mongo.sh
+./kafka.sh
 ```
 
 Browser
 ```
 localhost:9021
 localhost:8000
+```
+
+REST API
+```
+http://localhost:5000/hlasy
 ```
 
 All events in topic
