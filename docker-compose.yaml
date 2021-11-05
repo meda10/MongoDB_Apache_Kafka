@@ -219,13 +219,13 @@ services:
     working_dir: /var/www/html
     entrypoint: [ 'npm' ]
 
-  node:
+  mongo-rest-api:
     image: node:16
     container_name: mongo-rest-api
     ports:
       - "5000:5000"
     volumes:
-      - ./www:/server
+      - ./mongo-rest-api:/server
     working_dir: /server
 #    extra_hosts:
 #      - "mongo1:127.0.0.1"
@@ -240,7 +240,6 @@ services:
     environment:
       MONGO_URI: mongodb://mongo1:27017,mongo2:27017,mongo3:27017/volby
       DB_NAME: volby
-      PORT: 5000
     entrypoint: [ 'node', 'server.js']
 
   # MongoDB Replica Set

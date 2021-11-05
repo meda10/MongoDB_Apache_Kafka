@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const connectionString = process.env.MONGO_URI;
+// const connectionString = 'mongodb://localhost:27017/volby';
 const client = new MongoClient(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
