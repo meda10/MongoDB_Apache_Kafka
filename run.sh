@@ -125,10 +125,8 @@ echo -e "\nReady"
 
 
 
-#docker-compose exec rest-proxy curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
-#          --data '{"records":[{"value":{"strawwwna": "test2"}}]}' \
-#          "http://localhost:8082/topics/hlasy"
-#
+#curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" --data '{"records":[{"value":{"strana": "test"}}]}' "http://46.101.116.175:8082/topics/hlasy"
+
 #docker-compose exec rest-proxy curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
 #          --data '{"records":[{"value":{"strana": "test"}}]}' \
 #          "http://localhost:8082/topics/Hlasy"

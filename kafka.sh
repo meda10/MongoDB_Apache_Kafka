@@ -13,7 +13,7 @@ curl -X POST -H "Content-Type: application/json" --data '
       {"name": "retention.ms", "value": "-1"},
       {"name": "retention.bytes", "value": "-1"}
     ]
-}' http://localhost:8082/v3/clusters/v87eqwtsS7mLGxablM3Phg/topics -w "\n"
+}' http://localhost:8082/v3/clusters/2orv62iUTzC6Ykwxyx41IA/topics -w "\n"
 
 
 #{"name": "min.insync.replicas", "value": "1"}
@@ -61,7 +61,8 @@ curl -X POST -H "Content-Type: application/json" --data '
      "connection.uri":"mongodb://mongo1:27017,mongo2:27017,mongo3:27017",
      "database":"volby",
      "collection":"hlasy",
-     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-     "value.converter.schemas.enable": "false"
+     "value.converter.schemas.enable": "false",
+     "key.converter.schemas.enable": "false"
 }}' http://localhost:8083/connectors -w "\n"
