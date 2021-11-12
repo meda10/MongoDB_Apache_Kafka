@@ -26,6 +26,6 @@ dbo.connectToServer(function (err) {
 
   // start the Express server
   app.listen(PORT, () => {
-    console.log(`http://localhost:5000/volby`);
+    console.log(`http://localhost:5000/hlasy`);
   });
 });
