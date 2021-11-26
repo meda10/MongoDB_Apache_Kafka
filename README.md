@@ -73,13 +73,19 @@ curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
 ```
 docker exec -it ksql-server ksql http://127.0.0.1:8088
 
-CREATE STREAM stream_hlasy (id_okresu varchar, strana varchar, preferencni ARRAY<STRING>) WITH (kafka_topic='hlasy', key_format='json', value_format='json', partitions=1);
-CREATE STREAM stream_preferencni_hlasy (id_okresu varchar, preferencni varchar) WITH (kafka_topic='preferencni_hlasy', key_format='json', value_format='json', partitions=1);
+CREATE STREAM stream_hlasy (id_okresu STRING, strana STRING, preferencni ARRAY<STRING>) WITH (kafka_topic='hlasy', key_format='json', value_format='json', partitions=1);
+CREATE STREAM stream_preferencni_hlasy (id_okresu STRING, preferencni STRING) WITH (kafka_topic='preferencni_hlasy', key_format='json', value_format='json', partitions=1);
 
-CREATE TABLE table_hlasy_sum WITH (kafka_topic='okres_sum',  key_format='json', value_format='json', partitions=1) AS
+CREATE TABLE table_hlasy_sum_okres WITH (kafka_topic='hlasy_sum_okres',  key_format='json', value_format='json', partitions=1) AS
 SELECT id_okresu, strana, COUNT(*) AS count
 FROM stream_hlasy
 GROUP BY id_okresu, strana
+EMIT CHANGES;
+
+CREATE TABLE table_hlasy_sum_cr WITH (kafka_topic='hlasy_sum_cr',  key_format='json', value_format='json', partitions=1) AS
+SELECT strana, COUNT(*) AS count
+FROM stream_hlasy
+GROUP BY strana
 EMIT CHANGES;
 
 CREATE STREAM stream_preferencni_1_sum WITH (kafka_topic='preferencni_hlasy', key_format='json', value_format='json', partitions=1) AS
@@ -102,10 +108,16 @@ SELECT id_okresu, preferencni[4] as preferencni
 FROM stream_hlasy
 EMIT CHANGES;
 
-CREATE TABLE table_preferencni_hlasy_sum WITH (kafka_topic='preferencni_hlasy_sum',  key_format='json', value_format='json', partitions=1) AS
+CREATE TABLE table_preferencni_hlasy_sum_okres WITH (kafka_topic='preferencni_hlasy_sum_okres',  key_format='json', value_format='json', partitions=1) AS
 SELECT id_okresu, preferencni, COUNT(*) AS count
 FROM stream_preferencni_hlasy
 GROUP BY id_okresu, preferencni
+EMIT CHANGES;
+
+CREATE TABLE table_preferencni_hlasy_sum_cr WITH (KAFKA_TOPIC='preferencni_hlasy_sum_cr', VALUE_FORMAT='JSON', PARTITIONS=1) AS
+SELECT preferencni, COUNT(*) AS count
+FROM stream_preferencni_hlasy
+GROUP BY preferencni
 EMIT CHANGES;
 ```
 
