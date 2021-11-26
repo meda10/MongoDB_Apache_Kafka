@@ -201,25 +201,6 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 
-#  kafka-topics-ui:
-##    image: landoop/kafka-topics-ui:0.9.4
-#    build:
-#      context: .
-#      dockerfile: ./kafka-topics-ui/docker/Dockerfile
-#    container_name: kafka-topics-ui
-#    hostname: kafka-topics-ui
-#    ports:
-#      - "8000:8000"
-#    networks:
-#      - localnet
-#    environment:
-#      KAFKA_REST_PROXY_URL: "http://rest-proxy:8082/"
-#      PROXY: "true"
-#    depends_on:
-#      - zookeeper
-#      - broker
-#      - schema-registry
-#      - rest-proxy
 
 #  npm:
 #    image: node:16
