@@ -1,19 +1,11 @@
 const express = require('express');
-
-// recordRoutes is an instance of the express router.
-// We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /listings.
 const recordRoutes = express.Router();
-
-// This will help us connect to the database
 const dbo = require('./connect');
 
-
-// This section will help you get a list of all the records.
-recordRoutes.route('/hlasy').get(async function (_req, res) {
+recordRoutes.route('/hlasy').get(async function (req, res) {
     const dbConnect = dbo.getDb();
 
-    dbConnect
+    await dbConnect
         .collection('hlasy')
         .find({})
         .toArray(function (err, result) {
@@ -25,7 +17,151 @@ recordRoutes.route('/hlasy').get(async function (_req, res) {
         });
 });
 
-//
+recordRoutes.route('/okres/:id').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { ID_OKRESU: req.params.id };
+    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
+
+    await dbConnect
+        .collection('hlasy_sum_okres')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/okres/:id/strana/:name').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { ID_OKRESU: req.params.id, STRANA: req.params.name };
+    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
+
+    await dbConnect
+        .collection('hlasy_sum_okres')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU} or strana with name ${query.STRANA}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/okres/:id/preferencni').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { ID_OKRESU: req.params.id };
+    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
+
+    await dbConnect
+        .collection('preferencni_hlasy_sum_okres')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/okres/:id/preferencni/:id_pref').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { ID_OKRESU: req.params.id, PREFERENCNI: req.params.id_pref };
+    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
+
+    await dbConnect
+        .collection('preferencni_hlasy_sum_okres')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU} or person with id ${query.PREFERENCNI}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/cr').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = {};
+    const projection = { _id: 1, COUNT: 1 };
+
+    await dbConnect
+        .collection('hlasy_sum_cr')
+        .find(query)
+        .project(projection)
+//         .rename({ _id: 'ID_OKRESU' })
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/cr/strana/:name').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { _id: req.params.name };
+    const projection = { _id: 1, COUNT: 1 };
+
+    await dbConnect
+        .collection('hlasy_sum_cr')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find strana with name ${query._id}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/cr/preferencni').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { };
+    const projection = { _id: 1, COUNT: 1 };
+
+    await dbConnect
+        .collection('preferencni_hlasy_sum_cr')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/cr/preferencni/:id_pref').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = { _id: req.params.id_pref };
+    const projection = { _id: 1, COUNT: 1 };
+
+    await dbConnect
+        .collection('preferencni_hlasy_sum_cr')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find person with id ${query._id}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
 // // This section will help you get a list of all the records.
 // recordRoutes.route('/listings').get(async function (_req, res) {
 //     const dbConnect = dbo.getDb();
