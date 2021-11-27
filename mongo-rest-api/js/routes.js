@@ -4,10 +4,12 @@ const dbo = require('./connect');
 
 recordRoutes.route('/hlasy').get(async function (req, res) {
     const dbConnect = dbo.getDb();
+    const projection = { _id: 0, id_okresu: 1, preferencni: 1, strana: 1};
 
     await dbConnect
         .collection('hlasy')
         .find({})
+        .project(projection)
         .toArray(function (err, result) {
             if (err) {
                 res.status(400).send('Error fetching listings!');
