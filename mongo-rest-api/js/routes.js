@@ -19,7 +19,7 @@ recordRoutes.route('/hlasy').get(async function (req, res) {
         });
 });
 
-recordRoutes.route('/okres/:id').get(async function (req, res) {
+recordRoutes.route('/kraj/:id').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const query = { ID_OKRESU: req.params.id };
     const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
@@ -37,7 +37,7 @@ recordRoutes.route('/okres/:id').get(async function (req, res) {
         });
 });
 
-recordRoutes.route('/okres/:id/strana/:name').get(async function (req, res) {
+recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const query = { ID_OKRESU: req.params.id, STRANA: req.params.name };
     const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
@@ -55,7 +55,7 @@ recordRoutes.route('/okres/:id/strana/:name').get(async function (req, res) {
         });
 });
 
-recordRoutes.route('/okres/:id/preferencni').get(async function (req, res) {
+recordRoutes.route('/kraj/:id/preferencni').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const query = { ID_OKRESU: req.params.id };
     const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
@@ -73,7 +73,7 @@ recordRoutes.route('/okres/:id/preferencni').get(async function (req, res) {
         });
 });
 
-recordRoutes.route('/okres/:id/preferencni/:id_pref').get(async function (req, res) {
+recordRoutes.route('/kraj/:id/preferencni/:id_pref').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const query = { ID_OKRESU: req.params.id, PREFERENCNI: req.params.id_pref };
     const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
