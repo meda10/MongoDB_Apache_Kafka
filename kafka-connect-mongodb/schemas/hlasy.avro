@@ -4,7 +4,7 @@
   "type": "record",
   "fields": [
     {
-      "name": "id_okresu",
+      "name": "id_kraje",
       "type": {
         "type": "string",
         "arg.properties": {

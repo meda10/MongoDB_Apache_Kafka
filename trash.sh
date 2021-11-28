@@ -52,7 +52,7 @@ curl -X POST -H "Content-Type: application/json" --data '
     "collection": "okres_sum",
     "key.projection.type": "none",
     "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
-    "document.id.strategy.partial.value.projection.list": "strana,id_okresu",
+    "document.id.strategy.partial.value.projection.list": "strana,id_kraje",
     "document.id.strategy.partial.value.projection.type": "AllowList",
     "document.id.strategy.overwrite.existing": "true",
     "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneBusinessKeyTimestampStrategy"

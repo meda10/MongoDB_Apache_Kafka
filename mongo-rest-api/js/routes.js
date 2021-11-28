@@ -4,7 +4,7 @@ const dbo = require('./connect');
 
 recordRoutes.route('/hlasy').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    const projection = { _id: 0, id_okresu: 1, preferencni: 1, strana: 1};
+    const projection = { _id: 0, id_kraje: 1, preferencni: 1, strana: 1};
 
     await dbConnect
         .collection('hlasy')
@@ -21,8 +21,8 @@ recordRoutes.route('/hlasy').get(async function (req, res) {
 
 recordRoutes.route('/kraj/:id').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    const query = { ID_OKRESU: req.params.id };
-    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
+    const query = { ID_KRAJE: req.params.id };
+    const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1};
 
     await dbConnect
         .collection('hlasy_sum_okres')
@@ -30,7 +30,7 @@ recordRoutes.route('/kraj/:id').get(async function (req, res) {
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU}!`);
+                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE}!`);
             } else {
                 res.json(result);
             }
@@ -39,8 +39,8 @@ recordRoutes.route('/kraj/:id').get(async function (req, res) {
 
 recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    const query = { ID_OKRESU: req.params.id, STRANA: req.params.name };
-    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1};
+    const query = { ID_KRAJE: req.params.id, STRANA: req.params.name };
+    const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1};
 
     await dbConnect
         .collection('hlasy_sum_okres')
@@ -48,7 +48,7 @@ recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU} or strana with name ${query.STRANA}!`);
+                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE} or strana with name ${query.STRANA}!`);
             } else {
                 res.json(result);
             }
@@ -57,8 +57,8 @@ recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
 
 recordRoutes.route('/kraj/:id/preferencni').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    const query = { ID_OKRESU: req.params.id };
-    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
+    const query = { ID_KRAJE: req.params.id };
+    const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
 
     await dbConnect
         .collection('preferencni_hlasy_sum_okres')
@@ -66,7 +66,7 @@ recordRoutes.route('/kraj/:id/preferencni').get(async function (req, res) {
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU}!`);
+                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE}!`);
             } else {
                 res.json(result);
             }
@@ -75,8 +75,8 @@ recordRoutes.route('/kraj/:id/preferencni').get(async function (req, res) {
 
 recordRoutes.route('/kraj/:id/preferencni/:id_pref').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    const query = { ID_OKRESU: req.params.id, PREFERENCNI: req.params.id_pref };
-    const projection = { _id: 0, ID_OKRESU: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
+    const query = { ID_KRAJE: req.params.id, PREFERENCNI: req.params.id_pref };
+    const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
 
     await dbConnect
         .collection('preferencni_hlasy_sum_okres')
@@ -84,7 +84,7 @@ recordRoutes.route('/kraj/:id/preferencni/:id_pref').get(async function (req, re
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_OKRESU} or person with id ${query.PREFERENCNI}!`);
+                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE} or person with id ${query.PREFERENCNI}!`);
             } else {
                 res.json(result);
             }
@@ -100,7 +100,7 @@ recordRoutes.route('/cr').get(async function (req, res) {
         .collection('hlasy_sum_cr')
         .find(query)
         .project(projection)
-//         .rename({ _id: 'ID_OKRESU' })
+//         .rename({ _id: 'ID_KRAJE' })
         .toArray(function (err, result) {
             if (err) {
                 res.status(400);

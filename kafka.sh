@@ -35,7 +35,7 @@ curl -X POST -H "Content-Type: application/json" --data '
      "key.converter.schemas.enable": "false"
 }}' http://localhost:8083/connectors -w "\n"
 
-# todo create index on mongo db ID_OKRESU,STRANA
+# todo create index on mongo db ID_KRAJE,STRANA
 # Create sink for topic HLASY_SUM_OKRES
 # _ID is based on Topic keys | Update value + timestamps
 curl -X POST -H "Content-Type: application/json" --data '
@@ -53,14 +53,14 @@ curl -X POST -H "Content-Type: application/json" --data '
     "collection": "hlasy_sum_okres",
     "key.projection.type": "none",
     "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialKeyStrategy",
-    "document.id.strategy.partial.key.projection.list": "ID_OKRESU,STRANA",
+    "document.id.strategy.partial.key.projection.list": "ID_KRAJE,STRANA",
     "document.id.strategy.partial.key.projection.type": "AllowList",
     "document.id.strategy.overwrite.existing": "true",
     "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneBusinessKeyTimestampStrategy"
   }
 }' http://localhost:8083/connectors -w "\n"
 
-# todo create index on mongo db ID_OKRESU,PREFERENCNI
+# todo create index on mongo db ID_KRAJE,PREFERENCNI
 # Create sink for topic PREFERENCNI_HLASY_SUM_OKRES
 # _ID is based on Topic keys | Update value + timestamps
 curl -X POST -H "Content-Type: application/json" --data '
@@ -78,7 +78,7 @@ curl -X POST -H "Content-Type: application/json" --data '
     "collection": "preferencni_hlasy_sum_okres",
     "key.projection.type": "none",
     "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialKeyStrategy",
-    "document.id.strategy.partial.key.projection.list": "ID_OKRESU,PREFERENCNI",
+    "document.id.strategy.partial.key.projection.list": "ID_KRAJE,PREFERENCNI",
     "document.id.strategy.partial.key.projection.type": "AllowList",
     "document.id.strategy.overwrite.existing": "true",
     "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneBusinessKeyTimestampStrategy"
@@ -133,3 +133,11 @@ curl -X POST -H "Content-Type: application/json" --data '
     "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneTimestampsStrategy"
   }
 }' http://localhost:8083/connectors -w "\n"
+
+
+#KSQL
+
+curl -X "POST" "http://localhost:8088/ksql" -H "Content-Type: application/json; charset=utf-8" -d $'{
+  "ksql": "",
+  "streamsProperties": {}
+}'
