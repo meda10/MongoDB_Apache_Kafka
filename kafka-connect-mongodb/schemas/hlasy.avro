@@ -1,0 +1,48 @@
+{
+  "namespace": "ksql",
+  "name": "hlasy",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id_okresu",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+            "options": ["K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8", "K9", "K10", "K11", "K12", "K13", "K14"]
+        }
+      }
+    },
+    {
+      "name": "strana",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "XYZ",
+            "AAA",
+            "BBB"
+          ]
+        }
+      }
+    },
+    {
+      "name": "preferencni",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "arg.properties": {
+            "regex": "P[1-9]0[0-9]"
+          }
+        },
+        "arg.properties": {
+          "length":
+            {
+              "min": 0,
+              "max": 4
+            }
+        }
+      }
+    }
+  ]
+}
