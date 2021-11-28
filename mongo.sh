@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "\nMONGO\n"
+
 echo -e "\nConfiguring the MongoDB ReplicaSet.\n"
 docker-compose exec mongo1 /usr/bin/mongo --eval '''if (rs.status()["ok"] == 0) {
     rsconf = {

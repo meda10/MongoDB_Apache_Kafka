@@ -34,8 +34,11 @@
 ## How to run
 ```
 ./run.sh
-./mongo.sh
-./kafka.sh
+```
+
+## Generate data
+```
+./generate.sh
 ```
 
 ### Browser
@@ -64,7 +67,7 @@ kafka-topics --delete --zookeeper zookeeper:2181 --topic NAME
 ### Test Message
 ```
 curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
---data '{"records": [{"value": {"id_kraje": "W118", "strana": "XYZ", "preferencni": ["P802", "P802", "P102", "P802"]}}]}' \
+--data '{"records": [{"value": {"id_kraje": "K2", "strana": "XYZ", "preferencni": ["P802", "P802", "P102", "P802"]}}]}' \
 "http://localhost:8082/topics/hlasy"
 ```
 
