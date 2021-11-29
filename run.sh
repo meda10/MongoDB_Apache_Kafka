@@ -36,9 +36,19 @@ function test_systems_available {
 test_systems_available 8082
 test_systems_available 8083
 
-bash "$MONGO"
-bash "$KAFKA"
-bash "$KSQL_SCRIPT"
-bash "$MONGO_CONNECT_SCRIPT"
+while getopts "s" opt; do
+  case $opt in
+    s)
+      bash "$MONGO"
+      bash "$KAFKA"
+      bash "$KSQL_SCRIPT"
+      bash "$MONGO_CONNECT_SCRIPT"
+      ;;
+    \?)
+      echo "Invalid option: -$opt" >&2
+      exit 1
+      ;;
+  esac
+done
 
 echo -e "\nReady"

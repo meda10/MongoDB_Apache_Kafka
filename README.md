@@ -31,6 +31,11 @@
 #Inspirace 
 * https://www.novinky.cz/p/vysledky-voleb/2021/parlamentni-volby#utm_content=utility&utm_term=V%C3%BDsledky%20voleb&utm_medium=hint&utm_source=search.seznam.cz
 
+## Setup
+```
+./run.sh -s
+```
+
 ## How to run
 ```
 ./run.sh
@@ -39,6 +44,7 @@
 ## Generate data
 ```
 ./generate.sh
+./generate_5000.sh
 ```
 
 ### Browser
