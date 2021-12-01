@@ -17,6 +17,7 @@
   "dependencies": {
     "autocompleter": "^6.1.2",
     "axios": "^0.24.0",
+    "chart.js": "^3.6.1",
     "xmlhttprequest": "^1.8.0"
   }
 }

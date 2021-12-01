@@ -1,3 +1,20 @@
+const axios = require('axios');
+
+
+
+
+
+axios.get('http://localhost:5000/cr', {}).then(function (response) {
+    console.log(response);
+}).catch(function (error) {
+    console.log(error);
+});
+
+
+
+
+
+
 var autocomplete = require('autocompleter');
 
 
@@ -28,16 +45,10 @@ autocomplete({
 
 
 
-
-
-const axios = require('axios');
-
-
-
-
+/*
 const data = JSON.stringify( {"records":[{"value":{"strawwwna": "test2"}}]} );
 
-axios.post('http://localhost:8082/topics/hlasy', data, {
+axios.post('http://localhost:5000/hlasy', data, {
     headers: {
         'Content-Type': 'application/vnd.kafka.json.v2+json'
     }
@@ -47,26 +58,7 @@ axios.post('http://localhost:8082/topics/hlasy', data, {
     console.log(error);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
