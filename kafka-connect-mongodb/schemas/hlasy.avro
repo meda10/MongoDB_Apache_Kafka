@@ -18,9 +18,15 @@
         "type": "string",
         "arg.properties": {
           "options": [
-            "XYZ",
-            "AAA",
-            "BBB"
+            "NE",
+            "Proti sobě",
+            "Námořníci",
+            "Zaseklý blok",
+            "Lež",
+            "Prezidenti",
+            "Zavřeme česko",
+            "Levý blok",
+            "Teenager 21"
           ]
         }
       }
