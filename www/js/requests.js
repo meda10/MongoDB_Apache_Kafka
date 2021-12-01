@@ -1,6 +1,12 @@
 const axios = require('axios');
 var autocomplete = require('autocompleter');
 
+const form = document.getElementById('form_hlasy');
+form.addEventListener('submit', handleSubmit);
+
+const strana = document.getElementById('form_hlasy');
+strana.addEventListener('input', handleInput);
+
 let lidi = []
 let strany = []
 let kraje = []
@@ -12,6 +18,7 @@ function removeOptions(selectElement) {
         selectElement.remove(i);
     }
 }
+
 function addOptions(selectElement) {
     for (let i = 0; i < select_values.length; i++) {
         let select = document.getElementById(selectElement);
@@ -21,7 +28,6 @@ function addOptions(selectElement) {
         select.add(option);
     }
 }
-
 
 axios.get('http://localhost:5000/lidi', {}).then(function (response) {
     lidiRes = response.data;
@@ -85,22 +91,6 @@ function get_strany(){
         },
         onSelect: function(item) {
             input.value = item.label;
-            select_values = []
-            lidi.forEach(function(it){
-                if(it.strana === item.label) {
-                    let obj = {label: it.label, value: it.value}
-                    select_values.push(obj);
-                }
-            });
-            removeOptions(document.getElementById('select_pref1'));
-            removeOptions(document.getElementById('select_pref2'));
-            removeOptions(document.getElementById('select_pref3'));
-            removeOptions(document.getElementById('select_pref4'));
-            addOptions('select_pref1')
-            addOptions('select_pref2')
-            addOptions('select_pref3')
-            addOptions('select_pref4')
-
         },
     });
 }
@@ -156,9 +146,23 @@ function get_lidi(){
     });
 }
 
-const form = document.getElementById('form_hlasy');
-form.addEventListener('submit', handleSubmit);
-
+function handleInput(event) {
+    select_values = []
+    lidi.forEach(function(it){
+        if(it.strana === item.label) {
+            let obj = {label: it.label, value: it.value}
+            select_values.push(obj);
+        }
+    });
+    removeOptions(document.getElementById('select_pref1'));
+    removeOptions(document.getElementById('select_pref2'));
+    removeOptions(document.getElementById('select_pref3'));
+    removeOptions(document.getElementById('select_pref4'));
+    addOptions('select_pref1')
+    addOptions('select_pref2')
+    addOptions('select_pref3')
+    addOptions('select_pref4')
+}
 
 function handleSubmit(event) {
     event.preventDefault();
