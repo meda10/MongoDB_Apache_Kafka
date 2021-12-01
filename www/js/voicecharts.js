@@ -24,13 +24,16 @@ window.findAllKraje = function() {
         response.data.forEach((element) => {
             allKraje.push(element);
         });
-        refreshChart();
+
 
         const urlParams = new URLSearchParams(window.location.search);
         const regionCode = urlParams.get('kraj');
 
         if (regionCode !== null) {
             changeRegionName(regionCode);
+            refreshChart2(regionCode);
+        } else {
+            refreshChart();
         }
 
     }).catch(function (error) {
@@ -55,16 +58,38 @@ window.refreshChart = function() {
             }
         );
 
-        repaintChart();
+        repaintChart('myChart');
         refreshMap();
     }).catch(function (error) {
         console.log(error);
     });
 }
 
+window.refreshChart2 = function(idKraje) {
+    partiesNames = [];
+    partiesVotes = [];
+    partiesColors = [];
+    var parties = [];
 
-function repaintChart() {
-    const ctx = document.getElementById('myChart').getContext('2d');
+    axios.get('http://localhost:5000/kraj/' + idKraje).then(function (response) {
+        var data = response.data;
+        data.forEach((element) => {
+                var color = allParties.filter(e => e.strana === element.STRANA)[0];
+                partiesNames.push(element.STRANA);
+                partiesVotes.push(element.COUNT);
+                partiesColors.push(color.color);
+            }
+        );
+
+        repaintChart('myChartKraj');
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+function repaintChart(id) {
+    const ctx = document.getElementById(id).getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {

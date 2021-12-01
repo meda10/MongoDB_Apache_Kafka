@@ -28,6 +28,7 @@ recordRoutes.route('/kraj/:id').get(async function (req, res) {
         .collection('hlasy_sum_kraj')
         .find(query)
         .project(projection)
+        .sort( { COUNT : - 1 } )
         .toArray(function (err, result) {
             if (err) {
                 res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE}!`);
