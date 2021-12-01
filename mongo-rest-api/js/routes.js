@@ -61,6 +61,75 @@ recordRoutes.route('/krajnejlepsi/:id').get(async function (req, res) {
 });
 
 
+recordRoutes.route('/krajeNejlepsi').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    await dbConnect
+        .collection('hlasy_sum_kraj')
+        .aggregate([
+            {$project : { _id: 0, ID_KRAJE : 1, COUNT: 1, STRANA: 1 }},
+            {$sort : { ID_KRAJE : 1, COUNT : -1 }},
+            {$group : {
+                _id : "$ID_KRAJE",
+                total: {$first : "$COUNT"},
+                strana: {$first : "$STRANA"}
+            }}
+        ])
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not found` + err);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
+recordRoutes.route('/krajHlasuCelkem/:id').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    await dbConnect
+        .collection('hlasy_sum_kraj')
+        .aggregate([
+            {$group : {
+                _id : "$ID_KRAJE",
+                total: {$sum : "$COUNT"}
+            }},
+            { $match: { "_id": req.params.id } }
+        ])
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find `);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
+recordRoutes.route('/hlasuCelkem').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    await dbConnect
+        .collection('hlasy_sum_kraj')
+        .aggregate([
+
+            {$group : {
+                _id: "",
+                total: {$sum : "$COUNT"}
+            }},
+        ])
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find hlasu celkem!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
+
 recordRoutes.route('/kraje').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const projection = { _id: 1, nazev: 1 };
