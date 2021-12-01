@@ -1,10 +1,33 @@
+const axios = require('axios');
+
 var partiesNames = [];
 var partiesVotes = [];
 var partiesColors = [];
-var window.allPartiesColors = []
+window.allParties = [];
+window.allKraje = [];
 
-window.findColors = function() {
 
+window.findAllParties = function() {
+    axios.get('http://localhost:5000/strany', {}).then(function (response) {
+        response.data.forEach((element) => {
+            allParties.push(element);
+        });
+        findAllKraje();
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+window.findAllKraje = function() {
+    axios.get('http://localhost:5000/kraje', {}).then(function (response) {
+        response.data.forEach((element) => {
+            allKraje.push(element);
+        });
+        refreshChart();
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 
@@ -12,23 +35,27 @@ window.refreshChart = function() {
     partiesNames = [];
     partiesVotes = [];
     partiesColors = [];
+    var parties = [];
 
-    // todo dotaz
-    var parties = [
-       {"party" : "strana a", "voices" : 20, 'color' : 'rgb(255, 99, 132)'},
-       {"party" : "strana b", "voices" : 12, 'color' : 'rgb(54, 162, 235)'},
-       {"party" : "strana c", "voices" : 5, 'color' : 'rgb(153, 102, 255)'},
-       {"party" : "strana d", "voices" : 19, 'color' : 'rgb(255, 159, 64)'},
-    ];
+    axios.get('http://localhost:5000/cr', {}).then(function (response) {
+        var data = response.data;
+        data.forEach((element) => {
+                var color = allParties.filter(e => e.strana === element._id)[0];
+                partiesNames.push(element._id);
+                partiesVotes.push(element.COUNT);
+                partiesColors.push(color.color);
+            }
+        );
+
+        repaintChart();
+        refreshMap();
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
 
 
-    parties.forEach((element) => {
-            partiesNames.push(element.party);
-            partiesVotes.push(element.voices);
-            partiesColors.push(element.color);
-        }
-    );
-
+function repaintChart() {
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
@@ -47,5 +74,17 @@ window.refreshChart = function() {
 }
 
 
-window
+window.refreshMap = function() {
+    allKraje.forEach((kraj) => {
+        axios.get('http://localhost:5000/krajnejlepsi/' + kraj._id).then(function (response) {
+            var mapaKraj = document.getElementById(kraj._id);
+            var strana = response.data[0];
+            var color = allParties.filter(e => e.strana === strana.STRANA)[0].color;
+            mapaKraj.style.fill = color;
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+    });
+}
 
