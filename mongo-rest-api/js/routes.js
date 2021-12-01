@@ -25,12 +25,12 @@ recordRoutes.route('/kraj/:id').get(async function (req, res) {
     const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1};
 
     await dbConnect
-        .collection('hlasy_sum_okres')
+        .collection('hlasy_sum_kraj')
         .find(query)
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE}!`);
+                res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE}!`);
             } else {
                 res.json(result);
             }
@@ -43,12 +43,12 @@ recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
     const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1};
 
     await dbConnect
-        .collection('hlasy_sum_okres')
+        .collection('hlasy_sum_kraj')
         .find(query)
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE} or strana with name ${query.STRANA}!`);
+                res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE} or strana with name ${query.STRANA}!`);
             } else {
                 res.json(result);
             }
@@ -61,12 +61,12 @@ recordRoutes.route('/kraj/:id/preferencni').get(async function (req, res) {
     const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
 
     await dbConnect
-        .collection('preferencni_hlasy_sum_okres')
+        .collection('preferencni_hlasy_sum_kraj')
         .find(query)
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE}!`);
+                res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE}!`);
             } else {
                 res.json(result);
             }
@@ -79,12 +79,12 @@ recordRoutes.route('/kraj/:id/preferencni/:id_pref').get(async function (req, re
     const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1, PREFERENCNI: 1 };
 
     await dbConnect
-        .collection('preferencni_hlasy_sum_okres')
+        .collection('preferencni_hlasy_sum_kraj')
         .find(query)
         .project(projection)
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send(`Error can not find okres with id ${query.ID_KRAJE} or person with id ${query.PREFERENCNI}!`);
+                res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE} or person with id ${query.PREFERENCNI}!`);
             } else {
                 res.json(result);
             }
