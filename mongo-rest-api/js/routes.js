@@ -38,17 +38,18 @@ recordRoutes.route('/kraj/:id').get(async function (req, res) {
 });
 
 
-recordRoutes.route('/kraje').get(async function (req, res) {
+recordRoutes.route('/krajnejlepsi/:id').get(async function (req, res) {
     const dbConnect = dbo.getDb();
-    //const query = { ID_KRAJE: req.params.id };
+    const query = { ID_KRAJE: req.params.id };
     const projection = { _id: 0, ID_KRAJE: 1, COUNT: 1, STRANA: 1 };
-    const sort = { COUNT : 1 };
+    const sort = { COUNT : -1 };
 
     await dbConnect
         .collection('hlasy_sum_kraj')
-        .find({})
+        .find(query)
         .project(projection)
         .sort(sort)
+        .limit(1)
         .toArray(function (err, result) {
             if (err) {
                 res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE}!`);

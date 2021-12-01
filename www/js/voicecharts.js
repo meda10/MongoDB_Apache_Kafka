@@ -1,6 +1,11 @@
 var partiesNames = [];
 var partiesVotes = [];
 var partiesColors = [];
+var window.allPartiesColors = []
+
+window.findColors = function() {
+
+}
 
 
 window.refreshChart = function() {
@@ -40,3 +45,7 @@ window.refreshChart = function() {
         }
     });
 }
+
+
+window
+
