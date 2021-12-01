@@ -108,16 +108,16 @@ function repaintChart(id) {
 
 
 window.refreshMap = function() {
-    allKraje.forEach((kraj) => {
-        axios.get('http://localhost:5000/krajnejlepsi/' + kraj._id).then(function (response) {
+    axios.get('http://localhost:5000/krajeNejlepsi').then(function (response) {
+        var kraje = response.data;
+        allKraje.forEach((kraj) => {
             var mapaKraj = document.getElementById(kraj._id);
-            var strana = response.data[0];
-            var color = allParties.filter(e => e.strana === strana.STRANA)[0].color;
+            var strana = kraje.filter(e => e._id === kraj._id)[0].strana;
+            var color = allParties.filter(e => e.strana === strana)[0].color;
             mapaKraj.style.fill = color;
-
-        }).catch(function (error) {
-            console.log(error);
         });
+    }).catch(function (error) {
+        console.log(error);
     });
 }
 
