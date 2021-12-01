@@ -186,6 +186,42 @@ recordRoutes.route('/cr/preferencni/:id_pref').get(async function (req, res) {
         });
 });
 
+recordRoutes.route('/lidi').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = {};
+    const projection = { _id: 0, id: 1, name: 1, strana: 1 };
+
+    await dbConnect
+        .collection('lidi')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+recordRoutes.route('/strany').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const query = {};
+    const projection = { _id: 0, color: 1, strana: 1 };
+
+    await dbConnect
+        .collection('strany')
+        .find(query)
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
 // // This section will help you get a list of all the records.
 // recordRoutes.route('/listings').get(async function (_req, res) {
 //     const dbConnect = dbo.getDb();
