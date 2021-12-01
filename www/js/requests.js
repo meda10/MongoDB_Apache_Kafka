@@ -1,36 +1,42 @@
 const axios = require('axios');
+var autocomplete = require('autocompleter');
 
+let lidi = {}
+let strany = {}
+let kraje = {}
 
+axios.get('http://localhost:5000/lidi', {}).then(function (response) {
+    lidi = response.data;
+}).catch(function (error) {
+    console.log(error);
+});
 
-
-
-axios.get('http://localhost:5000/cr', {}).then(function (response) {
-    console.log(response);
+axios.get('http://localhost:5000/strany', {}).then(function (response) {
+    strany = response.data;
 }).catch(function (error) {
     console.log(error);
 });
 
 
+axios.get('http://localhost:5000/kraje', {}).then(function (response) {
+    kraje = response.data;
+}).catch(function (error) {
+    console.log(error);
+});
 
+// var countries = [
+//     { label: 'United Kingdom', value: 'UK' },
+//     { label: 'United States', value: 'US' }
+// ];
 
-
-
-var autocomplete = require('autocompleter');
-
-
-var countries = [
-    { label: 'United Kingdom', value: 'UK' },
-    { label: 'United States', value: 'US' }
-];
-
-var input = document.getElementById("country");
+var input = document.getElementById("kraj");
 
 autocomplete({
     input: input,
     fetch: function(text, update) {
         text = text.toLowerCase();
         // you can also use AJAX requests instead of preloaded data
-        var suggestions = countries.filter(n => n.label.toLowerCase().startsWith(text))
+        var suggestions = kraje.filter(n => n.label.toLowerCase().startsWith(text))
         update(suggestions);
     },
     onSelect: function(item) {
@@ -44,27 +50,28 @@ autocomplete({
 });
 
 
+form_hlasy.onsubmit = async (e) => {
+    e.preventDefault();
+    var object = {};
+    form_data = new FormData(formElem)
+    form_data.forEach((value, key) => object[key] = value);
+    var json = JSON.stringify(object);
 
-/*
-const data = JSON.stringify( {"records":[{"value":{"strawwwna": "test2"}}]} );
+    console.log(object);
 
-axios.post('http://localhost:5000/hlasy', data, {
-    headers: {
-        'Content-Type': 'application/vnd.kafka.json.v2+json'
-    }
-}).then(function (response) {
-    console.log(response);
-}).catch(function (error) {
-    console.log(error);
-});
-
-*/
-
-
-
-
-
-
+//     const data = JSON.stringify({"records": [{"value": {"id_kraje": "K2", "strana": "NE", "preferencni": ["P802", "P802", "P102", "P802"]}}]});
+//
+//     axios.post('http://localhost:5000/hlasy', data, {
+//         headers: {
+//             'Content-Type': 'application/vnd.kafka.json.v2+json'
+//         }
+//     }).then(function (response) {
+//         console.log(response);
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+//
+};
 
 
 
@@ -130,7 +137,19 @@ xhr.onreadystatechange = function () {
 
 xhr.send(JSON.stringify(bodyFormData));*/
 
-
+//     const data = JSON.stringify({"records": [{"value": {"id_kraje": "K2", "strana": "NE", "preferencni": ["P802", "P802", "P102", "P802"]}}]});
+//
+//     axios.post('http://localhost:5000/hlasy', data, {
+//         headers: {
+//             'Content-Type': 'application/vnd.kafka.json.v2+json'
+//         }
+//     }).then(function (response) {
+//         console.log(response);
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+//
+// };
 
 
 
