@@ -124,3 +124,19 @@ docker-compose exec mongo1 mongo volby --eval 'db.runCommand({ insert: "strany",
 { "strana": "Teenager 21", "color": "rgb(128,128,128)" },
 ]})'
 
+docker-compose exec mongo1 mongo volby --eval 'db.runCommand({ insert: "kraje", documents: [
+{ _id: "K1", "nazev": "Hlavní město Praha" },
+{ _id: "K2", "nazev": "Středočeský kraj" },
+{ _id: "K3", "nazev": "Jihočeský kraj" },
+{ _id: "K4", "nazev": "Plzeňský kraj" },
+{ _id: "K5", "nazev": "Karlovarský kraj" },
+{ _id: "K6", "nazev": "Ústecký kraj" },
+{ _id: "K7", "nazev": "Liberecký kraj" },
+{ _id: "K8", "nazev": "Královéhradecký kraj" },
+{ _id: "K9", "nazev": "Pardubický kraj" },
+{ _id: "K10", "nazev": "Kraj Vysočina" },
+{ _id: "K11", "nazev": "Jihomoravský kraj" },
+{ _id: "K12", "nazev": "Olomoucký kraj" },
+{ _id: "K13", "nazev": "Zlínský kraj" },
+{ _id: "K14", "nazev": "Moravskoslezský kraj" },
+]})'
