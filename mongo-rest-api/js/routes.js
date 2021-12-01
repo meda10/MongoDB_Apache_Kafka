@@ -60,6 +60,24 @@ recordRoutes.route('/krajnejlepsi/:id').get(async function (req, res) {
 });
 
 
+recordRoutes.route('/kraje').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    const projection = { _id: 1, nazev: 1 };
+
+    await dbConnect
+        .collection('kraje')
+        .find({})
+        .project(projection)
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find kraj with id ${query.ID_KRAJE}!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
 recordRoutes.route('/kraj/:id/strana/:name').get(async function (req, res) {
     const dbConnect = dbo.getDb();
     const query = { ID_KRAJE: req.params.id, STRANA: req.params.name };
@@ -123,7 +141,7 @@ recordRoutes.route('/cr').get(async function (req, res) {
         .collection('hlasy_sum_cr')
         .find(query)
         .project(projection)
-//         .rename({ _id: 'ID_KRAJE' })
+        .sort({ COUNT: -1 })
         .toArray(function (err, result) {
             if (err) {
                 res.status(400);
