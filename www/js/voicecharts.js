@@ -25,6 +25,14 @@ window.findAllKraje = function() {
             allKraje.push(element);
         });
         refreshChart();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const regionCode = urlParams.get('kraj');
+
+        if (regionCode !== null) {
+            changeRegionName(regionCode);
+        }
+
     }).catch(function (error) {
         console.log(error);
     });
