@@ -35,10 +35,10 @@ curl -X POST -H "Content-Type: application/json" --data '
 
 
 
-# Create sink for topic OKRES_SUM
+# Create sink for topic KRAJ_SUM
 # _ID is based on Topic values | Update value + timestamps
 curl -X POST -H "Content-Type: application/json" --data '
-{"name": "mongo-sink-okres_sum",
+{"name": "mongo-sink-kraj_sum",
   "config": {
     "key.converter.schemas.enable": "false",
     "value.converter.schemas.enable": "false",
@@ -46,10 +46,10 @@ curl -X POST -H "Content-Type: application/json" --data '
     "tasks.max": "1",
     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "topics": "okres_sum",
+    "topics": "kraj_sum",
     "connection.uri": "mongodb://mongo1:27017,mongo2:27017,mongo3:27017",
     "database": "volby",
-    "collection": "okres_sum",
+    "collection": "kraj_sum",
     "key.projection.type": "none",
     "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
     "document.id.strategy.partial.value.projection.list": "strana,id_kraje",

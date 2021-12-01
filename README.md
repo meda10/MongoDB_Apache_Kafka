@@ -85,7 +85,7 @@ docker exec -it ksql-server ksql http://127.0.0.1:8088
 CREATE STREAM stream_hlasy (id_kraje STRING, strana STRING, preferencni ARRAY<STRING>) WITH (kafka_topic='hlasy', key_format='json', value_format='json', partitions=1);
 CREATE STREAM stream_preferencni_hlasy (id_kraje STRING, preferencni STRING) WITH (kafka_topic='preferencni_hlasy', key_format='json', value_format='json', partitions=1);
 
-CREATE TABLE table_hlasy_sum_okres WITH (kafka_topic='hlasy_sum_okres',  key_format='json', value_format='json', partitions=1) AS
+CREATE TABLE table_hlasy_sum_kraj WITH (kafka_topic='hlasy_sum_kraj',  key_format='json', value_format='json', partitions=1) AS
 SELECT id_kraje, strana, COUNT(*) AS count
 FROM stream_hlasy
 GROUP BY id_kraje, strana
@@ -117,7 +117,7 @@ SELECT id_kraje, preferencni[4] as preferencni
 FROM stream_hlasy
 EMIT CHANGES;
 
-CREATE TABLE table_preferencni_hlasy_sum_okres WITH (kafka_topic='preferencni_hlasy_sum_okres',  key_format='json', value_format='json', partitions=1) AS
+CREATE TABLE table_preferencni_hlasy_sum_kraj WITH (kafka_topic='preferencni_hlasy_sum_kraj',  key_format='json', value_format='json', partitions=1) AS
 SELECT id_kraje, preferencni, COUNT(*) AS count
 FROM stream_preferencni_hlasy
 GROUP BY id_kraje, preferencni

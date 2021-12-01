@@ -13,7 +13,7 @@ curl -X "POST" "http://localhost:8088/ksql" -H "Content-Type: application/json; 
 }'
 
 curl -X "POST" "http://localhost:8088/ksql" -H "Content-Type: application/json; charset=utf-8" -d $'{
-  "ksql": "CREATE TABLE table_hlasy_sum_okres WITH (kafka_topic=\'hlasy_sum_okres\',  key_format=\'json\', value_format=\'json\', partitions=1) AS SELECT id_kraje, strana, COUNT(*) AS count FROM stream_hlasy GROUP BY id_kraje, strana EMIT CHANGES;",
+  "ksql": "CREATE TABLE table_hlasy_sum_kraj WITH (kafka_topic=\'hlasy_sum_kraj\',  key_format=\'json\', value_format=\'json\', partitions=1) AS SELECT id_kraje, strana, COUNT(*) AS count FROM stream_hlasy GROUP BY id_kraje, strana EMIT CHANGES;",
   "streamsProperties": {}
 }'
 
@@ -43,7 +43,7 @@ curl -X "POST" "http://localhost:8088/ksql" -H "Content-Type: application/json; 
 }'
 
 curl -X "POST" "http://localhost:8088/ksql" -H "Content-Type: application/json; charset=utf-8" -d $'{
-  "ksql": "CREATE TABLE table_preferencni_hlasy_sum_okres WITH (kafka_topic=\'preferencni_hlasy_sum_okres\',  key_format=\'json\', value_format=\'json\', partitions=1) AS SELECT id_kraje, preferencni, COUNT(*) AS count FROM stream_preferencni_hlasy GROUP BY id_kraje, preferencni EMIT CHANGES;",
+  "ksql": "CREATE TABLE table_preferencni_hlasy_sum_kraj WITH (kafka_topic=\'preferencni_hlasy_sum_kraj\',  key_format=\'json\', value_format=\'json\', partitions=1) AS SELECT id_kraje, preferencni, COUNT(*) AS count FROM stream_preferencni_hlasy GROUP BY id_kraje, preferencni EMIT CHANGES;",
   "streamsProperties": {}
 }'
 
