@@ -1,221 +1,177 @@
 const axios = require('axios');
 var autocomplete = require('autocompleter');
 
-let lidi = {}
-let strany = {}
-let kraje = {}
+var lidi = []
+var strany = []
+var kraje = []
 
 axios.get('http://localhost:5000/lidi', {}).then(function (response) {
-    lidi = response.data;
+    lidiRes = response.data;
+    lidiRes.forEach(function(item){
+        let obj = { label : item.name, value: item.id }
+        lidi.push(obj);
+    });
+    get_lidi()
 }).catch(function (error) {
     console.log(error);
 });
 
 axios.get('http://localhost:5000/strany', {}).then(function (response) {
-    strany = response.data;
+    stranyRes = response.data;
+    stranyRes.forEach(function(item){
+        let obj = { label : item.strana, value: item.strana }
+        strany.push(obj);
+    });
+    get_strany()
 }).catch(function (error) {
     console.log(error);
 });
 
 
 axios.get('http://localhost:5000/kraje', {}).then(function (response) {
-    kraje = response.data;
+    krajeRes = response.data;
+    krajeRes.forEach(function(item){
+        let obj = { label : item.nazev, value: item._id }
+        kraje.push(obj);
+
+    });
+    get_kraje()
 }).catch(function (error) {
     console.log(error);
 });
 
-// var countries = [
-//     { label: 'United Kingdom', value: 'UK' },
-//     { label: 'United States', value: 'US' }
-// ];
+function get_kraje(){
+    var input = document.getElementById("kraj");
+    autocomplete({
+        input: input,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = kraje.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            input.value = item.label;
 
-var input = document.getElementById("kraj");
-
-autocomplete({
-    input: input,
-    fetch: function(text, update) {
-        text = text.toLowerCase();
-        // you can also use AJAX requests instead of preloaded data
-        var suggestions = kraje.filter(n => n.label.toLowerCase().startsWith(text))
-        update(suggestions);
-    },
-    onSelect: function(item) {
-        input.value = item.label;
-    },
-    /*render: function(item, currentValue) {
-        var div = doc.createElement("div");
-        div.textContent = item.label;
-        return div;
-    },*/
-});
-
-
-form_hlasy.onsubmit = async (e) => {
-    e.preventDefault();
-    var object = {};
-    form_data = new FormData(formElem)
-    form_data.forEach((value, key) => object[key] = value);
-    var json = JSON.stringify(object);
-
-    console.log(object);
-
-//     const data = JSON.stringify({"records": [{"value": {"id_kraje": "K2", "strana": "NE", "preferencni": ["P802", "P802", "P102", "P802"]}}]});
-//
-//     axios.post('http://localhost:5000/hlasy', data, {
-//         headers: {
-//             'Content-Type': 'application/vnd.kafka.json.v2+json'
-//         }
-//     }).then(function (response) {
-//         console.log(response);
-//     }).catch(function (error) {
-//         console.log(error);
-//     });
-//
-};
-
-
-
-
-//const  bodyFormData = { "name":"John", "age":30, "city":"New York"};
-
-/*const options = {
-  hostname: 'localhost',
-  port: 8082,
-  path: '/topics/hlasy',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/vnd.kafka.json.v2+json',
-    'Content-Length': data.length
-  }
+        },
+    });
 }
 
-
-const req = http.request(options, res => {
-  console.log(`statusCode: ${res.statusCode}`)
-
-  res.on('data', d => {
-    process.stdout.write(d)
-  })
-})
-
-req.on('error', error => {
-  console.error(error)
-})
-
-req.write(data)
-req.end()*/
-
-/*axios({
-  method: 'post',
-  url: 'http://localhost:8082/topics/hlasy',
-  data: JSON.stringify(bodyFormData),
-  config: { headers: {
-      'Content-Type': 'application/vnd.kafka.json.v2+json'
-    }}
-  })
-  .then((response) => {console.log(response)})
-  .catch(error => {console.log( 'the error has occured: ' + error) });*/
-
-/*var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-var xhr = new XMLHttpRequest();
-xhr.open("POST", 'http://localhost:8082/topics/hlasy', true);
-xhr.setRequestHeader('Content-Type', 'application/vnd.kafka.json.v2+json');
-
-xhr.onreadystatechange = function () {
-    console.log(this.readyState);
-
-    if (this.readyState != 4) return;
-
-
-    if (this.status == 200) {
-        var data = JSON.parse(this.responseText);
-        console.log(data);
-        // we get the returned data
-    }
-};
-
-xhr.send(JSON.stringify(bodyFormData));*/
-
-//     const data = JSON.stringify({"records": [{"value": {"id_kraje": "K2", "strana": "NE", "preferencni": ["P802", "P802", "P102", "P802"]}}]});
-//
-//     axios.post('http://localhost:5000/hlasy', data, {
-//         headers: {
-//             'Content-Type': 'application/vnd.kafka.json.v2+json'
-//         }
-//     }).then(function (response) {
-//         console.log(response);
-//     }).catch(function (error) {
-//         console.log(error);
-//     });
-//
-// };
-
-
-
-
-
-
-
-
-
-//var KafkaRest = require('kafka-rest');
-//var kafka = new KafkaRest({ 'url': 'http://localhost:8082'});
-
-/*var KafkaRestClient = require('kafka-rest-client');
-
-var configs = {
-    proxyHost: 'localhost',
-    proxyPort: 8082
-};
-
-function callback(ddd) {
-    console.log(ddd);
+function get_strany(){
+    var input = document.getElementById("strana");
+    autocomplete({
+        input: input,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = strany.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            input.value = item.label;
+        },
+    });
 }
 
-var kafkaRestClient = new KafkaRestClient(configs, callback);
-kafkaRestClient.connect(callback);
+function get_lidi(){
+    var pref1 = document.getElementById("pref1");
+    var pref2 = document.getElementById("pref2");
+    var pref3 = document.getElementById("pref3");
+    var pref4 = document.getElementById("pref4");
+    autocomplete({
+        input: pref1,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            pref1.value = item.label;
+        },
+    });
+    autocomplete({
+        input: pref2,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            pref2.value = item.label;
+        },
+    });
+    autocomplete({
+        input: pref3,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            pref3.value = item.label;
+        },
+    });
+    autocomplete({
+        input: pref4,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
+            console.log(suggestions)
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            pref4.value = item.value;
+        },
+    });
+}
+
+const form = document.getElementById('form_hlasy');
+form.addEventListener('submit', handleSubmit);
 
 
-kafkaRestClient.produce('hlasy', 'Example Kafka Message', callback);*/
+function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const value = Object.fromEntries(data.entries());
+    console.log({ value });
 
+    let kraj_id = null
+    let strana = value.strana
+    let pref1 = null
+    let pref2 = null
+    let pref3 = null
+    let pref4 = null
 
+    kraje.forEach(function(item){
+        if(value.kraj === item.label){
+            kraj_id = item.value
+        }
+    });
 
-/*kafka.topics.get('hlasy', function(err, topic) {
-     // topic is a Topic object
-     console.log(topic);
- });*/
+    lidi.forEach(function(item){
+        if(value.pref1 === item.label){
+            pref1 = item.value
+        }
+        if(value.pref2 === item.label){
+            pref2 = item.value
+        }
+        if(value.pref3 === item.label){
+            pref3 = item.value
+        }
+        if(value.pref4 === item.label){
+            pref4 = item.value
+        }
+    });
 
-// kafka.topic('hlasy').produce({"value":{"strawssswwna": "tesssst2"});
-
-/*var userIdSchema = new KafkaRest.AvroSchema("int");
-var userInfoSchema = new KafkaRest.AvroSchema({
-    "name": "UserInfo",
-    "type": "record",
-    "fields": [
-        //{ "name": "id", "type": "int" },
-        { "name": "name", "type": "string" }]
-});*/
-
-// Avro value schema followed by messages containing only values
-//kafka.topic('hlasy').produce(userInfoSchema, {'avro': 'record'}, {'avro': 'another record'}, function(err, res){console.log(err); console.log(res);});
-
-// Avro key and value schema.
-
-//var data = JSON.stringify(eval( {'value': {'name': 'Bob'}} ));
-//var data = {"records": [{"value":{"name":"bar"}}]};
-//kafka.topic('hlasy').produce(userInfoSchema, data, function(err, res){console.log(err); console.log(res);});
-//kafka.topic('hlasy').produce({'key': 'key1', 'value': 'msg1', 'partition': 0}, function(err,res){console.log(err); console.log(res);});
-//kafka.topic('hlasy').produce('message')
-
-
-//    kafka.topic('hlasy').produce({'value': 'jo', 'partition': 0});
-
-//kafka.topic('hlasy').produce({'value': 'jo', 'partition': 0}, function(err,res){console.log(err); console.log(res);});
-
-
-/*function addVoice(party, vote1, vote2, vote3, vote4) {
-    kafka.topic('hlasy').produce({'value': 'jo', 'partition': 0});
-}*/
-
-
+    const post_data = JSON.stringify({"records": [{"value": {"id_kraje": kraj_id, "strana": strana, "preferencni": [pref1, pref2, pref3, pref4]}}]});
+    axios.post('http://localhost:8082/topics/hlasy', post_data, {
+        headers: { 'Content-Type': 'application/vnd.kafka.json.v2+json' }
+    }).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
