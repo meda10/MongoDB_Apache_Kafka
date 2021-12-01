@@ -8,7 +8,7 @@ window.refreshChart = function() {
     partiesVotes = [];
     partiesColors = [];
 
-
+    // todo dotaz
     var parties = [
        {"party" : "strana a", "voices" : 20, 'color' : 'rgb(255, 99, 132)'},
        {"party" : "strana b", "voices" : 12, 'color' : 'rgb(54, 162, 235)'},
