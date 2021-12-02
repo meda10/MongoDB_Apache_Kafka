@@ -113,7 +113,6 @@ recordRoutes.route('/hlasuCelkem').get(async function (req, res) {
     await dbConnect
         .collection('hlasy_sum_kraj')
         .aggregate([
-
             {$group : {
                 _id: "",
                 total: {$sum : "$COUNT"}
@@ -128,6 +127,42 @@ recordRoutes.route('/hlasuCelkem').get(async function (req, res) {
         });
 });
 
+
+recordRoutes.route('/hlasuMaxCelkemKraj/:id').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    await dbConnect
+        .collection('kraje')
+        .find({ _id: req.params.id })
+        .project ({ _id: 1, maxPocetHlasu: 1 })
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find hlasu celkem!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
+recordRoutes.route('/hlasuMaxCelkem').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    await dbConnect
+        .collection('kraje')
+        .aggregate([
+            {$group : {
+                _id: "",
+                total: {$sum : "$maxPocetHlasu"}
+            }},
+        ])
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find hlasu celkem!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
 
 
 recordRoutes.route('/kraje').get(async function (req, res) {
