@@ -60,6 +60,22 @@ axios.get('http://localhost:5000/kraje', {}).then(function (response) {
 
 function get_kraje(){
     var input = document.getElementById("kraj");
+
+    autocomplete({
+        input: input,
+        fetch: function(text, update) {
+            text = text.toLowerCase();
+            var suggestions = kraje.filter(n => n.label.toLowerCase().startsWith(text))
+            update(suggestions);
+        },
+        onSelect: function(item) {
+            input.value = item.label;
+
+        },
+    });
+
+    input = document.getElementById("krajname");
+
     autocomplete({
         input: input,
         fetch: function(text, update) {
@@ -204,3 +220,31 @@ function handleSubmit(event) {
         console.log(error);
     });
 }
+
+
+const form2 = document.getElementById('form_pocet_volicu_v_kraji');
+form2.addEventListener('submit', handleSubmit2);
+
+function handleSubmit2(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const value = Object.fromEntries(data.entries());
+    let kraj_id = null;
+    let pocetVolicu = value.pocetvolicu;
+
+    console.log({ value });
+
+
+    kraje.forEach(function(item){
+        if(value.kraj === item.label){
+            kraj_id = item.value
+        }
+    });
+
+    axios.get('http://localhost:5000/pocetVolicu/' +  pocetVolicu + '/kraj/' + kraj_id, {}).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
