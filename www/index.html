@@ -42,7 +42,7 @@
                         </div>
                         <div class="row mx-auto text-center">
                             <div class="col-xs-12 mx-auto">
-                                <span id="info-summed-percent" class="vlb-val">100%</span>
+                                <span id="info-summed-percent-cr" class="vlb-val">100%</span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="row mx-auto text-center">
                             <div class="col-xs-12 mx-auto">
-                                <span id="info-participation-percent" class="vlb-val">69%</span>
+                                <span id="info-participation-percent-cr" class="vlb-val">69%</span>
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                     </div>
                     <div class="row mx-auto text-center">
                         <div class="col-xs-12 mx-auto">
-                            <span id="info-summed-percent" class="vlb-val">100%</span>
+                            <span id="info-summed-percent-kraj" class="vlb-val">100%</span>
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="row mx-auto text-center">
                         <div class="col-xs-12 mx-auto">
-                            <span id="info-participation-percent" class="vlb-val">69%</span>
+                            <span id="info-participation-percent-kraj" class="vlb-val">69%</span>
                         </div>
                     </div>
                 </div>
@@ -268,9 +268,7 @@
 
         var secondsLeft = 45;
         var countdownSeconds = document.getElementById('countdownSeconds');
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const regionCode = urlParams.get('kraj');
+        var countdownSeconds2 = document.getElementById('countdownSeconds2');
 
         function refreshPage() {
             secondsLeft = 45;
@@ -281,6 +279,7 @@
             } else {
                 refreshChart();
                 refreshMap();
+                findVoicesCounted();
             }
         }
 
@@ -302,6 +301,7 @@
             text += seconds;
 
             countdownSeconds.innerHTML = text;
+            countdownSeconds2.innerHTML = text;
         }
 
         setInterval(countTime, 1000);

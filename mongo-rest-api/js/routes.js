@@ -113,7 +113,6 @@ recordRoutes.route('/hlasuCelkem').get(async function (req, res) {
     await dbConnect
         .collection('hlasy_sum_kraj')
         .aggregate([
-
             {$group : {
                 _id: "",
                 total: {$sum : "$COUNT"}
@@ -128,6 +127,43 @@ recordRoutes.route('/hlasuCelkem').get(async function (req, res) {
         });
 });
 
+
+recordRoutes.route('/hlasuMaxCelkemKraj/:id').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    await dbConnect
+        .collection('kraje')
+        .find({ _id: req.params.id })
+        .project ({ _id: 1, maxPocetHlasu: 1, pocetVolicu : 1 })
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find hlasu celkem!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
+
+
+recordRoutes.route('/hlasuMaxCelkem').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+
+    await dbConnect
+        .collection('kraje')
+        .aggregate([
+            {$group : {
+                _id: "",
+                total: {$sum : "$maxPocetHlasu"},
+                totalPeople: {$sum : "$pocetVolicu"}
+            }},
+        ])
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send(`Error can not find hlasu celkem!`);
+            } else {
+                res.json(result);
+            }
+        });
+});
 
 
 recordRoutes.route('/kraje').get(async function (req, res) {
@@ -310,6 +346,19 @@ recordRoutes.route('/strany').get(async function (req, res) {
             }
         });
 });
+
+
+recordRoutes.route('/pocetVolicu/:nb/kraj/:id').get(async function (req, res) {
+    const dbConnect = dbo.getDb();
+    await dbConnect
+        .collection('kraje')
+        .update({'_id' : req.params.id},
+                {$set:{'pocetVolicu' : Number(req.params.nb) }}, {multi:true});
+
+    res.status(200).send('updated');
+});
+
+
 
 // // This section will help you get a list of all the records.
 // recordRoutes.route('/listings').get(async function (_req, res) {

@@ -5,6 +5,11 @@ var partiesVotes = [];
 var partiesColors = [];
 window.allParties = [];
 window.allKraje = [];
+window.allPossibleVoices = 0;
+window.allPossibleVoicesRegion = 0;
+window.voicesCount = 0;
+window.regionPeopleCount = 0;
+window.allPeopleCount = 0;
 
 
 window.findAllParties = function() {
@@ -13,6 +18,7 @@ window.findAllParties = function() {
             allParties.push(element);
         });
         findAllKraje();
+        findAllVoicesPossible();
     }).catch(function (error) {
         console.log(error);
     });
@@ -24,7 +30,6 @@ window.findAllKraje = function() {
         response.data.forEach((element) => {
             allKraje.push(element);
         });
-
 
         const urlParams = new URLSearchParams(window.location.search);
         const regionCode = urlParams.get('kraj');
@@ -39,6 +44,75 @@ window.findAllKraje = function() {
     }).catch(function (error) {
         console.log(error);
     });
+}
+
+
+window.findAllVoicesPossible = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const regionCode = urlParams.get('kraj');
+
+    if (regionCode !== null) {
+        axios.get('http://localhost:5000/hlasuMaxCelkemKraj/' + regionCode).then(function (response) {
+            var voices = response.data[0].maxPocetHlasu;
+            regionPeopleCount = response.data[0].pocetVolicu;
+            allPossibleVoicesRegion = voices;
+            findVoicesCountedRegion(regionCode);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    } else {
+        axios.get('http://localhost:5000/hlasuMaxCelkem').then(function (response) {
+            console.log(response);
+            var voices = response.data[0].total;
+            allPeopleCount = response.data[0].totalPeople;
+            allPossibleVoices = voices;
+            findVoicesCounted();
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
+
+
+window.findVoicesCounted = function() {
+    axios.get('http://localhost:5000/hlasuCelkem').then(function (response) {
+        var voices = response.data[0].total;
+        voicesCount = voices;
+        setUcast(allPossibleVoices, allPeopleCount, voicesCount, false);
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+window.findVoicesCountedRegion = function(regionCode) {
+    axios.get('http://localhost:5000/krajHlasuCelkem/' + regionCode).then(function (response) {
+        var voices = response.data[0].total;
+        voicesCount = voices;
+        setUcast(allPossibleVoicesRegion, regionPeopleCount, voicesCount, true);
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+window.setUcast = function(allVoices, allPeople, countedVoices, region) {
+    var percentSpan;
+    if (region) {
+        percentSpan = document.getElementById('info-participation-percent-kraj');
+        percentSpanTotal = document.getElementById('info-summed-percent-kraj');
+    } else {
+        percentSpan = document.getElementById('info-participation-percent-cr');
+        percentSpanTotal = document.getElementById('info-summed-percent-cr');
+    }
+
+    var percent = countedVoices / allVoices * 100;
+    percent = Math.round(percent * 100) / 100;
+    percentSpan.innerHTML = percent + "%";
+
+    var percentTotal = countedVoices / allPeople * 100;
+    percentTotal = Math.round(percentTotal * 100) / 100;
+    percentSpanTotal.innerHTML = percentTotal + "%";
 }
 
 
