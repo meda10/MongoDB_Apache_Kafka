@@ -47,6 +47,17 @@
 ./generate_5000.sh
 ```
 
+## Compile and run GUI
+```
+cd www
+npm run start
+```
+
+```
+localhost:1234
+```
+
+
 ### Browser
 ```
 localhost:9021
