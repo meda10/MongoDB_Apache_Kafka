@@ -20,7 +20,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
     </nav>
 
     <div id="body">
@@ -204,16 +203,14 @@
         </div>
     </div>
 
-
-    <script src="js/requests.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="js/voicecharts.js"></script>
 
     <script>
         findAllParties();
 
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const regionCode = urlParams.get('kraj');
+        const urlParams = new URLSearchParams(window.location.search);
+        const regionCode = urlParams.get('kraj');
 
         if (regionCode !== null) {
             hideRepublicDiv();

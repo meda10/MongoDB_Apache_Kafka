@@ -62,7 +62,6 @@ window.findAllVoicesPossible = function() {
         });
     } else {
         axios.get('http://localhost:5000/hlasuMaxCelkem').then(function (response) {
-            console.log(response);
             var voices = response.data[0].total;
             allPeopleCount = response.data[0].totalPeople;
             allPossibleVoices = voices;
@@ -126,9 +125,11 @@ window.refreshChart = function() {
         var data = response.data;
         data.forEach((element) => {
                 var color = allParties.filter(e => e.strana === element._id)[0];
-                partiesNames.push(element._id);
-                partiesVotes.push(element.COUNT);
-                partiesColors.push(color.color);
+                if (color !== undefined) {
+                    partiesNames.push(element._id);
+                    partiesVotes.push(element.COUNT);
+                    partiesColors.push(color.color);
+                }
             }
         );
 
@@ -149,9 +150,11 @@ window.refreshChart2 = function(idKraje) {
         var data = response.data;
         data.forEach((element) => {
                 var color = allParties.filter(e => e.strana === element.STRANA)[0];
-                partiesNames.push(element.STRANA);
-                partiesVotes.push(element.COUNT);
-                partiesColors.push(color.color);
+                if (color !== undefined) {
+                    partiesNames.push(element.STRANA);
+                    partiesVotes.push(element.COUNT);
+                    partiesColors.push(color.color);
+                }
             }
         );
 
