@@ -220,6 +220,7 @@ function handleSubmit(event) {
         headers: { 'Content-Type': 'application/vnd.kafka.json.v2+json' }
     }).then(function (response) {
         console.log(response);
+        alert("Data úspěšně odeslána");
     }).catch(function (error) {
         console.log(error);
     });
@@ -247,6 +248,7 @@ function handleSubmit2(event) {
 
     axios.get('http://localhost:5000/pocetVolicu/' +  pocetVolicu + '/kraj/' + kraj_id, {}).then(function (response) {
         console.log(response);
+        alert("Data úspěšně odeslána");
     }).catch(function (error) {
         console.log(error);
     });
