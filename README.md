@@ -1,36 +1,5 @@
 # PDB
 
-## Tutorial
-* https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html
-* https://stackoverflow.com/questions/57544201/implement-dockerized-kafka-sink-connector-to-mongo
-* https://docs.mongodb.com/kafka-connector/current/
-
-## Monfo DB connector
-* https://github.com/mongodb/mongo-kafka
-
-## Rest API
-* https://docs.confluent.io/platform/current/kafka-rest/index.html#kafkarest-intro
-* https://hub.docker.com/r/confluentinc/cp-kafka-rest
-* https://github.com/nodefluent/kafka-rest-ui
-* https://github.com/confluentinc/kafka-rest
-* https://github.com/confluentinc/kafka-rest-node
-
-## KSQL
-* https://ksqldb.io/quickstart-platform.html#quickstart-content
-* https://docs.confluent.io/platform/6.2.0/ksqldb/pull-queries-in-ccloud.html
-* https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/
-* https://docs.ksqldb.io/en/latest/how-to-guides/query-structured-data/
-* https://docs.confluent.io/5.4.2/ksql/docs/tutorials/examples.html#aggregating-windowing-and-sessionization
-* https://kafka-tutorials.confluent.io/create-stateful-aggregation-count/ksql.html
-
-## Volby.cz
-* https://volby.cz/opendata/ps2021/ps2021_opendata_seznam.htm
-* https://volby.cz/pls/ps2021/ps?xjazyk=CZ
-* https://volby.cz/pls/ps2021/ps4?xjazyk=CZ
-
-#Inspirace 
-* https://www.novinky.cz/p/vysledky-voleb/2021/parlamentni-volby#utm_content=utility&utm_term=V%C3%BDsledky%20voleb&utm_medium=hint&utm_source=search.seznam.cz
-
 ## Setup
 ```
 ./run.sh -s
@@ -47,10 +16,9 @@
 ./generate_5000.sh
 ```
 
-### Browser
+### Control center
 ```
 localhost:9021
-localhost:8000
 ```
 
 ###  REST API
