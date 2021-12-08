@@ -1,7 +1,8 @@
-<html lang="EN">
+<html>
 <head>
     <title>PDB projekt | Volby do poslanecké směnovny 2021</title>
     <link rel="stylesheet" href="css/css.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -19,7 +20,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
     </nav>
 
     <div id="body">
@@ -203,15 +203,14 @@
         </div>
     </div>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="js/voicecharts.js"></script>
 
     <script>
         findAllParties();
 
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const regionCode = urlParams.get('kraj');
+        const urlParams = new URLSearchParams(window.location.search);
+        const regionCode = urlParams.get('kraj');
 
         if (regionCode !== null) {
             hideRepublicDiv();
