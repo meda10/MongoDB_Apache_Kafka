@@ -4,8 +4,8 @@ var autocomplete = require('autocompleter');
 const form = document.getElementById('form_hlasy');
 form.addEventListener('submit', handleSubmit);
 
-const strana = document.getElementById('form_hlasy');
-strana.addEventListener('input', handleInput);
+// const form2 = document.getElementById('form_pocet_volicu_v_kraji');
+// strana.addEventListener('input', handleInput);
 
 let lidi = []
 let strany = []
@@ -35,7 +35,7 @@ axios.get('http://localhost:5000/lidi', {}).then(function (response) {
         let obj = { label : item.name, value: item.id, strana: item.strana }
         lidi.push(obj);
     });
-    // get_lidi()
+    get_lidi()
 }).catch(function (error) {
     console.log(error);
 });
@@ -80,17 +80,17 @@ function get_kraje(){
         },
     });
 
-    input = document.getElementById("krajname");
+    let input2 = document.getElementById("krajname");
 
     autocomplete({
-        input: input,
+        input: input2,
         fetch: function(text, update) {
             text = text.toLowerCase();
             var suggestions = kraje.filter(n => n.label.toLowerCase().startsWith(text))
             update(suggestions);
         },
         onSelect: function(item) {
-            input.value = item.label;
+            input2.value = item.label;
 
         },
     });
@@ -107,77 +107,74 @@ function get_strany(){
         },
         onSelect: function(item) {
             input.value = item.label;
+            select_values = []
+            lidi.forEach(function(it){
+                if(it.strana === item.label) {
+                    let obj = {label: it.label, value: it.value}
+                    select_values.push(obj);
+                }
+            });
+            removeOptions(document.getElementById('select_pref1'));
+            removeOptions(document.getElementById('select_pref2'));
+            removeOptions(document.getElementById('select_pref3'));
+            removeOptions(document.getElementById('select_pref4'));
+            addOptions('select_pref1')
+            addOptions('select_pref2')
+            addOptions('select_pref3')
+            addOptions('select_pref4')
         },
     });
 }
 
 function get_lidi(){
-    var pref1 = document.getElementById("pref1");
-    var pref2 = document.getElementById("pref2");
-    var pref3 = document.getElementById("pref3");
-    var pref4 = document.getElementById("pref4");
+    var select_pref1 = document.getElementById("select_pref1");
+    var select_pref2 = document.getElementById("select_pref2");
+    var select_pref3 = document.getElementById("select_pref3");
+    var select_pref4 = document.getElementById("select_pref4");
     autocomplete({
-        input: pref1,
+        input: select_pref1,
         fetch: function(text, update) {
             text = text.toLowerCase();
             var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
             update(suggestions);
         },
         onSelect: function(item) {
-            pref1.value = item.label;
+            select_pref1.value = item.label;
         },
     });
     autocomplete({
-        input: pref2,
+        input: select_pref2,
         fetch: function(text, update) {
             text = text.toLowerCase();
             var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
             update(suggestions);
         },
         onSelect: function(item) {
-            pref2.value = item.label;
+            select_pref2.value = item.label;
         },
     });
     autocomplete({
-        input: pref3,
+        input: select_pref3,
         fetch: function(text, update) {
             text = text.toLowerCase();
             var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
             update(suggestions);
         },
         onSelect: function(item) {
-            pref3.value = item.label;
+            select_pref3.value = item.label;
         },
     });
     autocomplete({
-        input: pref4,
+        input: select_pref4,
         fetch: function(text, update) {
             text = text.toLowerCase();
             var suggestions = lidi.filter(n => n.label.toLowerCase().startsWith(text))
             update(suggestions);
         },
         onSelect: function(item) {
-            pref4.value = item.value;
+            select_pref4.value = item.value;
         },
     });
-}
-
-function handleInput(event) {
-    select_values = []
-    lidi.forEach(function(it){
-        if(it.strana === item.label) {
-            let obj = {label: it.label, value: it.value}
-            select_values.push(obj);
-        }
-    });
-    removeOptions(document.getElementById('select_pref1'));
-    removeOptions(document.getElementById('select_pref2'));
-    removeOptions(document.getElementById('select_pref3'));
-    removeOptions(document.getElementById('select_pref4'));
-    addOptions('select_pref1')
-    addOptions('select_pref2')
-    addOptions('select_pref3')
-    addOptions('select_pref4')
 }
 
 function handleSubmit(event) {
@@ -188,32 +185,12 @@ function handleSubmit(event) {
 
     let kraj_id = null
     let strana = value.strana
-    let pref1 = null
-    let pref2 = null
-    let pref3 = null
-    let pref4 = null
-
     kraje.forEach(function(item){
         if(value.kraj === item.label){
             kraj_id = item.value
         }
     });
 
-    // lidi.forEach(function(item){
-    //     if(value.pref1 === item.label){
-    //         pref1 = item.value
-    //     }
-    //     if(value.pref2 === item.label){
-    //         pref2 = item.value
-    //     }
-    //     if(value.pref3 === item.label){
-    //         pref3 = item.value
-    //     }
-    //     if(value.pref4 === item.label){
-    //         pref4 = item.value
-    //     }
-    // });
-    //
     // const post_data = JSON.stringify({"records": [{"value": {"id_kraje": kraj_id, "strana": strana, "preferencni": [pref1, pref2, pref3, pref4]}}]});
     const post_data = JSON.stringify({"records": [{"value": {"id_kraje": kraj_id, "strana": strana, "preferencni": [value.pref1, value.pref2, value.pref3, value.pref4]}}]});
     axios.post('http://localhost:8082/topics/hlasy', post_data, {
@@ -221,6 +198,9 @@ function handleSubmit(event) {
     }).then(function (response) {
         console.log(response);
         alert("Data úspěšně odeslána");
+        location.reload();
+        form.reset()
+        form2.reset()
     }).catch(function (error) {
         console.log(error);
     });
@@ -249,6 +229,9 @@ function handleSubmit2(event) {
     axios.get('http://localhost:5000/pocetVolicu/' +  pocetVolicu + '/kraj/' + kraj_id, {}).then(function (response) {
         console.log(response);
         alert("Data úspěšně odeslána");
+        location.reload()
+        form.reset()
+        form2.reset()
     }).catch(function (error) {
         console.log(error);
     });
