@@ -114,6 +114,12 @@ window.setUcast = function(allVoices, allPeople, countedVoices, region) {
     percentSpanTotal.innerHTML = percentTotal + "%";
 }
 
+function get_mandates(sum_hlasy, count){
+    let mandate_max = 200;
+    let proc = Math.round((100*count)/sum_hlasy);
+    return Math.round((mandate_max*proc)/100);
+}
+
 
 window.refreshChart = function() {
     partiesNames = [];
@@ -123,10 +129,16 @@ window.refreshChart = function() {
 
     axios.get('http://localhost:5000/cr', {}).then(function (response) {
         var data = response.data;
+        let sum_hlasy = 0;
+        data.forEach((element) => {
+            sum_hlasy += element.COUNT;
+        });
+        console.log(sum_hlasy);
         data.forEach((element) => {
                 var color = allParties.filter(e => e.strana === element._id)[0];
                 if (color !== undefined) {
-                    partiesNames.push(element._id);
+                    let mandate = get_mandates(sum_hlasy, element.COUNT)
+                    partiesNames.push(element._id + ' - ' + mandate);
                     partiesVotes.push(element.COUNT);
                     partiesColors.push(color.color);
                 }
