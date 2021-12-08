@@ -16,6 +16,19 @@
 ./generate_5000.sh
 ```
 
+## Compile and run GUI
+```
+cd www
+npm install
+npm run start
+```
+
+Then go to page
+```
+localhost:1234
+```
+
+
 ### Control center
 ```
 localhost:9021
