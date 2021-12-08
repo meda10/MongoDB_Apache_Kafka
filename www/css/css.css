@@ -103,3 +103,9 @@ svg path {
     background: #81ca91;
     cursor: pointer;
 }
+
+#bodyCenter {
+    margin-top: 200px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
