@@ -53,6 +53,7 @@ cd www
 npm run start
 ```
 
+### Go to page
 ```
 localhost:1234
 ```
