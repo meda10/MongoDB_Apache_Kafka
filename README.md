@@ -1,5 +1,6 @@
-# PDB
+# MongoDB + Apache Kafka
 
+Project connecting MongoDB with Apache Kafka. Data is queried with SQL, user can communicate with app through simple REST API.
 ## Setup
 ```
 ./run.sh -s
