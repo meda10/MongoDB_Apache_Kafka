@@ -1,6 +1,9 @@
 # MongoDB + Apache Kafka
 
-Project connecting MongoDB with Apache Kafka. Data is queried with SQL, user can communicate with app through simple REST API.
+Project simulates parlament elections.
+
+Distributed system is implemented using Apache Kafka and distribued MongoDB with data replication. Data is queried using KSQL and accesible to user trought simple REST API. Everything is dockerized for ease of deployment.
+
 ## Setup
 ```
 ./run.sh -s
